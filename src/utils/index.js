@@ -1,9 +1,21 @@
 const { parseUrl } = require("./parseUrl");
-const { SEPARATOR, ENDPOINT, REQKEYS } = require("./constants");
+const {
+  SEPARATOR,
+  ENDPOINTS,
+  REQKEYS,
+  SEARCH_ENDPOINT,
+  CRUD,
+  HEADERS,
+  HELLO_MESSAGE,
+} = require("./constants");
 
 module.exports = {
   parseUrl,
   SEPARATOR,
-  ENDPOINT,
+  ENDPOINTS,
   REQKEYS,
+  SEARCH_ENDPOINT,
+  CRUD,
+  HEADERS,
+  HELLO_MESSAGE,
 };
