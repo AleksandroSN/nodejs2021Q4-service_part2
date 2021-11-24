@@ -11,8 +11,8 @@ const mockUser2 = {
   hobbies: ["TEST", "Marketing", "Travel"],
 };
 
-const persons = [mockUser, mockUser2];
+const db = [mockUser, mockUser2];
 
 module.exports = {
-  persons,
+  db,
 };

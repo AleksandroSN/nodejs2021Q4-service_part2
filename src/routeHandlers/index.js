@@ -1,12 +1,5 @@
-const { getPerson, getAllPersons } = require("./getPerson");
-const { postPerson } = require("./postPerson");
-const { putPerson } = require("./putPerson");
-const { deletePerson } = require("./deletePerson");
+const { Controller } = require("./controller");
 
 module.exports = {
-  getPerson,
-  getAllPersons,
-  postPerson,
-  putPerson,
-  deletePerson,
+  Controller,
 };
