@@ -7,7 +7,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "start:dev": "nodemon server.js",
-    "start:prod": "webpack && nodemon ./dist/build.js"
+    "start:prod": "webpack --mode production && nodemon ./dist/build.js"
   },
   "repository": {
     "type": "git",

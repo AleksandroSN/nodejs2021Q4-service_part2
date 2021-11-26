@@ -10,6 +10,7 @@ const ENDPOINTS = {
   ROOT: "/",
   PERSON: "/person",
   PERSONID: "/person/:id",
+  CLEAR: "/delete",
 };
 
 const HEADERS = {

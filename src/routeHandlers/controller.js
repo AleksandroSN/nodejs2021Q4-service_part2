@@ -82,6 +82,17 @@ class Controller {
       }
     });
   }
+
+  static async clearDb() {
+    return new Promise((res, rej) => {
+      try {
+        db.splice(0, db.length);
+        res(db.length);
+      } catch (error) {
+        rej(error);
+      }
+    });
+  }
 }
 
 module.exports = {

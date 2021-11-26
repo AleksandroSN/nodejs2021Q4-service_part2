@@ -10,7 +10,7 @@ const {
   HEADERS,
   HELLO_MESSAGE,
 } = require("./src/utils");
-const { sendMessage, routeHandler } = require("./src/routeHandlers");
+const { sendMessage, routeHandler, Controller } = require("./src/routeHandlers");
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +24,14 @@ const server = http.createServer(async (req, res) => {
     // ROOT
     if (url.pathname === ENDPOINTS.ROOT) {
       sendMessage(res, 200, HEADERS.textHtml, HELLO_MESSAGE);
+      return;
+    }
+
+    // CLEAR DB
+    if (url.pathname === ENDPOINTS.CLEAR && req.method === "DELETE") {
+      await Controller.clearDb();
+      sendMessage(res, 204, HEADERS.textHtml, "DB CLEARED");
+      return;
     }
 
     // Validation id
@@ -57,4 +65,8 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+server.on("request", () => {
+  console.log("request");
 });
