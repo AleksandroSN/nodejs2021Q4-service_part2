@@ -9,13 +9,7 @@ const REQKEYS = {
 const ENDPOINTS = {
   ROOT: "/",
   PERSON: "/person",
-};
-
-const CRUD = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE",
+  PERSONID: "/person/:id",
 };
 
 const HEADERS = {
@@ -30,7 +24,6 @@ module.exports = {
   SEPARATOR,
   REQKEYS,
   ENDPOINTS,
-  CRUD,
   HEADERS,
   HELLO_MESSAGE,
 };

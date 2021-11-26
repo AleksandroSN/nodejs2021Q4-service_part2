@@ -3,49 +3,32 @@ const http = require("http");
 const uuid = require("uuid");
 const {
   parseUrl,
+  validateUrl,
   SEPARATOR,
   ENDPOINTS,
   SEARCH_ENDPOINT,
-  CRUD,
   HEADERS,
   HELLO_MESSAGE,
 } = require("./src/utils");
-const {
-  sendMessage,
-  readAll,
-  readId,
-  putData,
-  postData,
-  deleteData,
-} = require("./src/routeHandlers");
+const { sendMessage, routeHandler } = require("./src/routeHandlers");
 
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(async (req, res) => {
   try {
-    const reqUrl = req.url;
-    const personId = parseUrl(reqUrl, SEARCH_ENDPOINT, SEPARATOR);
-    const validId = uuid.validate(personId);
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const { id, parseId } = parseUrl(url.pathname, SEARCH_ENDPOINT, SEPARATOR);
+    const urlForValidity = parseId || url.pathname;
+    const validUrl = validateUrl(urlForValidity);
 
     // ROOT
-    if (reqUrl === ENDPOINTS.ROOT && req.method === CRUD.GET) {
+    if (url.pathname === ENDPOINTS.ROOT) {
       sendMessage(res, 200, HEADERS.textHtml, HELLO_MESSAGE);
     }
 
-    // /person
-    if (reqUrl === ENDPOINTS.PERSON && req.method === CRUD.GET) {
-      await readAll(res);
-    }
-    if (reqUrl === ENDPOINTS.PERSON && req.method === CRUD.POST) {
-      try {
-        await postData(req, res);
-      } catch (error) {
-        sendMessage(res, 400, HEADERS.textHtml, error.message);
-      }
-    }
-
-    // /person/:d
-    if (reqUrl === `${ENDPOINTS.PERSON}/${personId}`) {
+    // Validation id
+    if (parseId === ENDPOINTS.PERSONID) {
+      const validId = uuid.validate(id);
       if (!validId) {
         sendMessage(
           res,
@@ -56,40 +39,19 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
-    if (
-      reqUrl === `${ENDPOINTS.PERSON}/${personId}` &&
-      req.method === CRUD.GET
-    ) {
-      try {
-        await readId(res, personId);
-      } catch (error) {
-        sendMessage(res, 404, HEADERS.textHtml, error.message);
-      }
+    // Validation url
+    if (!validUrl) {
+      sendMessage(res, 404, HEADERS.textHtml, "<h1>404 PAGE</h1>");
     }
 
-    if (
-      reqUrl === `${ENDPOINTS.PERSON}/${personId}` &&
-      req.method === CRUD.PUT
-    ) {
-      try {
-        await putData(req, res, personId);
-      } catch (error) {
-        sendMessage(res, 404, HEADERS.textHtml, error.message);
-      }
-    }
-
-    if (
-      reqUrl === `${ENDPOINTS.PERSON}/${personId}` &&
-      req.method === CRUD.DELETE
-    ) {
-      try {
-        await deleteData(res, personId);
-      } catch (error) {
-        sendMessage(res, 404, HEADERS.textHtml, error.message);
-      }
-    }
+    await routeHandler(req, res, id, parseId);
   } catch (err) {
-    sendMessage(res, 500, HEADERS.textHtml, "Ooops something wrong");
+    sendMessage(
+      res,
+      500,
+      HEADERS.textHtml,
+      `Ooops something wrong. Error message ${err.message} `
+    );
   }
 });
 
