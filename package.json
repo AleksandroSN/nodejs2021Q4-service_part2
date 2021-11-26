@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "start:dev": "nodemon server.js"
+    "start:dev": "nodemon server.js",
+    "start:prod": "webpack && nodemon ./dist/build.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,9 @@
   "bugs": {
     "url": "https://github.com/AleksandroSN/simple-crud-api/issues"
   },
-  
   "devDependencies": {
     "@types/jest": "^27.0.3",
+    "babel-loader": "^8.2.3",
     "eslint": "^8.3.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
@@ -31,9 +32,7 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.4.1",
     "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.5.0",
-    "webpack-merge": "^5.8.0"
+    "webpack-cli": "^4.9.1"
   },
   "homepage": "https://github.com/AleksandroSN/simple-crud-api#readme",
   "dependencies": {
