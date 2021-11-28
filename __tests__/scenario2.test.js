@@ -4,8 +4,8 @@ const { requestOptions } = require("./requestOptions");
 const { clearDb } = require("./clearDb");
 
 describe("Scenario 2", () => {
-  beforeAll(() => {
-    return clearDb();
+  beforeAll(async() => {
+    await clearDb();
   });
   it("should return 400 and error message", async () => {
     const options = requestOptions.getId("sdfdsfdsf-sfdsf22");

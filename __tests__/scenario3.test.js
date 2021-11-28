@@ -4,8 +4,8 @@ const { requestOptions } = require("./requestOptions");
 const { clearDb } = require("./clearDb");
 
 describe("Scenario 3", () => {
-  beforeAll(() => {
-    return clearDb();
+  beforeAll(async() => {
+    await clearDb();
   });
 
   let id = "";
