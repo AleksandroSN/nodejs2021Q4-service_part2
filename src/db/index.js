@@ -1,5 +1,5 @@
-const { persons } = require("./persons");
+const { db } = require("./db");
 
 module.exports = {
-  persons,
+  db,
 };
